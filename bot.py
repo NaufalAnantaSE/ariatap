@@ -18,7 +18,7 @@ def send_tap_request(user_id, authorization_token):
     try:
         response = requests.put(tap_url, headers=headers)
         if response.status_code == 200:
-            return True  # Tap berhasil
+            return True  
         else:
             return False
     except Exception as e:
@@ -64,25 +64,25 @@ def unlimited_tap_requests(user_id, authorization_token, max_workers=20):
                 for _ in range(max_workers)
             ]
 
-            # Tunggu hasil untuk setiap batch
+           
             for future in concurrent.futures.as_completed(futures):
-                if future.result():  # Jika tap berhasil
+                if future.result():  
                     username, coins_earned_tapping = fetch_user_details(user_id, authorization_token)
                     if username and coins_earned_tapping is not None:
                         print(f"Tap berhasil {username} - Coins Earned (Tap): {coins_earned_tapping}")
                 else:
                     print("Tap gagal.")
 
-            # Jeda antar batch
+            
             time.sleep(0.5)
 
 if __name__ == "__main__":
-    # Masukkan informasi yang diperlukan di sini
-    USER_ID = "6580806500"  # ID pengguna
-    AUTHORIZATION_TOKEN = "dGVzdF9hZG1pbjpqdHRJWHJoUU1DdWpvcUR1Q3Vo"  # Token Basic Auth
+    
+    USER_ID = "MASUKAN ID TELEGRAM DI SINI"  # ID pengguna
+    AUTHORIZATION_TOKEN = "MASUKAN TOKEN BASIC AUTH"  # Token Basic Auth
 
     # Jumlah maksimum thread untuk tap requests
     MAX_WORKERS = 10
 
-    # Menjalankan fungsi
+    
     unlimited_tap_requests(USER_ID, AUTHORIZATION_TOKEN, MAX_WORKERS)
